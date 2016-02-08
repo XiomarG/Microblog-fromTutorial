@@ -16,18 +16,20 @@ SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 # mail server settings
-MAIL_SERVER = 'localhost'
-MAIL_PORT = 25
-MAIL_USERNAME = None
-MAIL_PASSWORD = None
+MAIL_SERVER = 'smtp.gmail.com'
+MAIL_PORT = 465
+MAIL_USE_TLS = False
+MAIL_USE_SSL = True
+MAIL_USERNAME = 'gongxun.cn@gmail.com'
+MAIL_PASSWORD = 'clarke@1386'
 
 # administrator list
-ADMINS = ['you@example.com']
+ADMINS = ['gongxun.cn@gmail.com']
 
 # pagination
 POSTS_PER_PAGE = 3
 
 # full text searching
 
-WHOOSH_BASE = os.path.join(basedir,'search.db')
+WHOOSH_BASE = os.path.join(basedir, 'search.db')
 MAX_SEARCH_RESULTS = 50

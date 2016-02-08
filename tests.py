@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from config import basedir
 from app import app, db
 from app.models import User, Post
+from app.emails import follower_notification
 
 
 class TestCase(unittest.TestCase):
@@ -67,9 +68,9 @@ class TestCase(unittest.TestCase):
         assert u1.followed.count() == 0
         assert u2.followers.count() == 0
 
-        def test_follow_posts(self):
+    def test_follow_posts(self):
             # make four users
-            u1 = User(nickname='john', email='john@example.com')
+            u1 = User(nickname='john', email='gongxun.cn@gmail.com')
             u2 = User(nickname='susan', email='susan@example.com')
             u3 = User(nickname='mary', email='mary@example.com')
             u4 = User(nickname='david', email='david@example.com')
@@ -94,6 +95,8 @@ class TestCase(unittest.TestCase):
             db.session.commit()
             # setup the followers
             u1.follow(u1)  # john follows himself
+            print 'u1 is following u1'
+            follower_notification(u1, u1)
             u1.follow(u2)  # john follows susan
             u1.follow(u4)  # john follows david
             u2.follow(u2)  # susan follows herself

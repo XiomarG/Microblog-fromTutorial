@@ -6,7 +6,7 @@ from app import app, db, lm, oid
 from .forms import LoginForm, EditForm, PostForm, SearchForm
 from .models import User, Post
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS
-
+from .emails import follower_notification
 
 @lm.user_loader
 def load_user(id):
@@ -147,6 +147,7 @@ def follow(nickname):
     db.session.add(u)
     db.session.commit()
     flash('You are now following ' + nickname + '!')
+    follower_notification(user, g.user)
     return redirect(url_for('user', nickname=nickname))
 
 
@@ -171,8 +172,7 @@ def unfollow(nickname):
 def search():
     if not g.search_form.validate_on_submit():
         return redirect(url_for('index'))
-    return redirect(url_for('search_results',query = g.search_form.search.data))
-
+    return redirect(url_for('search_results', query = g.search_form.search.data))
 
 
 @app.route('/search_results/<query>')
